@@ -1,0 +1,35 @@
+#!/bin/bash
+source /config/handbrake-cli.cfg
+output_move_dir=/output/originals
+
+if [ -e /config/handbrake ]; then
+	chmod +x /config/handbrake
+	echo "Using custom handbrake config - $*"
+	/config/handbrake "$*"
+else
+	echo "Using h265ize - $*"
+	/scripts/h265ize "$*" -v --stat 1 -d /output -g /tmp --aspreset finalCut
+fi
+
+echo "Running Post Process"
+if [[ $keep_smaller_file -eq 1 ]]; then
+	delete_on_complete=0
+	if [[ -e $new ]]; then
+		if [[ $(stat -c%s "$original") -ge $(stat -c%s "$new") ]]; then
+		echo "keep $new"
+	#	rm -v "$original"
+		else
+		echo "keep $original"
+	#	rm -v "$new"
+		fi
+	else
+		echo "moving original to new"
+	#	mv -v "$original" `echo $output_dir`
+	fi
+fi
+
+if [[ $delete_on_complete -eq 1 ]]; then
+	rm -v "$original"
+else
+	mv -v "$original" `echo $output_move_dir`
+fi
