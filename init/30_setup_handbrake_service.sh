@@ -23,3 +23,5 @@ chmod -v +x /scripts/handbrake
 chmod -v +x /scripts/process-folder
 mkdir -p /config/logs
 mkdir -p /output/originals
+
+crontab -l | { cat; echo "*/5 * * * * /scripts/process-folder"; } | crontab -

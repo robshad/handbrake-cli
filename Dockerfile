@@ -9,7 +9,6 @@ RUN apt-get update -q && \
   apt-get install $APTLIST -qy && \
   apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
-ADD cron/ /etc/cron.d/
 ADD init/ /etc/my_init.d/
 ADD scripts/ /scripts/
 RUN chmod -v +x /etc/service/*/run && \
