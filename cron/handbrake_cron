@@ -1,1 +1,1 @@
-*/5 * * * * root /scripts/process-folder >> /logs/cron.log
+*/5 * * * * abc /scripts/process-folder >> /logs/cron.log
