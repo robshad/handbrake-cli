@@ -4,26 +4,26 @@ output_move_dir=/output/originals
 
 if [ -e /config/handbrake ]; then
 	chmod +x /config/handbrake
-	echo "Using custom handbrake config - $*" >> /logs/cron.log
-	/config/handbrake "$*" >> /logs/cron.log
+	echo "Using custom handbrake config - $*" >> /config/logs/cron.log
+	/config/handbrake "$*" >> /config/logs/cron.log
 else
 	echo "Using h265ize - $*" >> /logs/cron.log
-	/scripts/h265ize "$*" -v --stat 1 -d /output -g /tmp --aspreset finalCut>> /logs/cron.log
+	/scripts/h265ize "$*" -v --stat 1 -d /output -g /tmp --aspreset finalCut>> /config/logs/cron.log
 fi
 
-echo "Running Post Process" >> /logs/cron.log
+echo "Running Post Process" >> /config/logs/cron.log
 if [[ $keep_smaller_file -eq 1 ]]; then
 	delete_on_complete=0
 	if [[ -e $new ]]; then
 		if [[ $(stat -c%s "$original") -ge $(stat -c%s "$new") ]]; then
-		echo "keep $new" >> /logs/cron.log
+		echo "keep $new" >> /config/logs/cron.log
 	#	rm -v "$original"
 		else
-		echo "keep $original" >> /logs/cron.log
+		echo "keep $original" >> /config/logs/cron.log
 	#	rm -v "$new"
 		fi
 	else
-		echo "moving original to new" >> /logs/cron.log
+		echo "moving original to new" >> /config/logs/cron.log
 	#	mv -v "$original" `echo $output_dir`
 	fi
 fi
