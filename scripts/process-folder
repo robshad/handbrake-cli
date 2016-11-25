@@ -9,6 +9,7 @@ if [ -e /tmp/handbrake-cli.lock ]; then
   echo "handbrake-cli is running already."
   exit 1
 else
+  touch /tmp/handbrake-cli.lock
   find $input_dir -type f -mmin +$last_touched_mins -print0 | xargs -0 -i /scripts/handbrake {}
   rm -f /tmp/handbrake-cli.lock
   exit 0
