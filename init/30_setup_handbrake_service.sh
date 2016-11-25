@@ -8,7 +8,7 @@ rm bc_1.06.95-2_amd64.deb
 rm -f /tmp/handbrake-cli.lock
 
 echo "Downloading h265ize"
-wget -v -O /scripts/h265ize 'https://raw.githubusercontent.com/FallingSnow/h265ize/master/h265ize'
+wget -v -O /scripts/h265ize 'https://raw.githubusercontent.com/FallingSnow/h265ize/v0.3.1-2/h265ize'
 
 if [ ! -f /config/handbrake-cli.cfg ];then
 	echo "Downloading default handbrake-cli config"
